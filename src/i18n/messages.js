@@ -5,38 +5,45 @@
 // CONTRACT (pure logic, portable): built-in UI strings + locale-aware number labels.
 //   resolveLocale(tag) -> supported BCP-47 base tag ('en' fallback)
 //   messages(tag)      -> { noData, chart, summary }
+//   registerLocale(tag, catalog) / registerLocales(map) -> add languages (opt-in)
 //   summarize(tag, { title, type, series, points }) -> string
 //   isRTL(tag)         -> boolean
 //   numberFormatter(tag) -> (v:number) => string   (Intl compact when available)
-// Covers the Core-20 world languages plus a Nusantara pack (jv, su, ms).
+// Only English is built in; 22 more catalogs (Core-20 + Nusantara) live in ./locales.js.
 
-/** @type {Record<string, {noData:string, chart:string, summary:string}>} */
+/**
+ * Registered catalogs. Only English ships in the main bundle; add more with
+ * registerLocale()/registerLocales() (see src/i18n/locales.js for 22 ready-made ones).
+ * @type {Record<string, {noData:string, chart:string, summary:string}>}
+ */
 export const MESSAGES = {
   en: { noData: 'No data', chart: 'Chart', summary: '{title}: {type} chart with {series} series, {points} data points.' },
-  zh: { noData: '无数据', chart: '图表', summary: '{title}：{type} 图，{series} 个系列，{points} 个数据点。' },
-  hi: { noData: 'कोई डेटा नहीं', chart: 'चार्ट', summary: '{title}: {type} चार्ट, {series} श्रृंखला, {points} डेटा बिंदु।' },
-  es: { noData: 'Sin datos', chart: 'Gráfico', summary: '{title}: gráfico {type} con {series} series y {points} puntos de datos.' },
-  fr: { noData: 'Aucune donnée', chart: 'Graphique', summary: '{title} : graphique {type} avec {series} séries et {points} points de données.' },
-  ar: { noData: 'لا توجد بيانات', chart: 'مخطط', summary: '{title}: مخطط {type} يضم {series} سلسلة و{points} نقطة بيانات.' },
-  bn: { noData: 'কোনো ডেটা নেই', chart: 'চার্ট', summary: '{title}: {type} চার্ট, {series}টি সিরিজ, {points}টি ডেটা পয়েন্ট।' },
-  pt: { noData: 'Sem dados', chart: 'Gráfico', summary: '{title}: gráfico {type} com {series} séries e {points} pontos de dados.' },
-  ru: { noData: 'Нет данных', chart: 'Диаграмма', summary: '{title}: диаграмма {type}, рядов: {series}, точек данных: {points}.' },
-  ur: { noData: 'کوئی ڈیٹا نہیں', chart: 'چارٹ', summary: '{title}: {type} چارٹ، {series} سلسلے، {points} ڈیٹا پوائنٹس۔' },
-  id: { noData: 'Tidak ada data', chart: 'Grafik', summary: '{title}: grafik {type} dengan {series} seri, {points} titik data.' },
-  de: { noData: 'Keine Daten', chart: 'Diagramm', summary: '{title}: {type}-Diagramm mit {series} Reihen und {points} Datenpunkten.' },
-  ja: { noData: 'データなし', chart: 'チャート', summary: '{title}: {type} チャート、{series} 系列、{points} データポイント。' },
-  sw: { noData: 'Hakuna data', chart: 'Chati', summary: '{title}: chati ya {type} yenye mfululizo {series} na alama za data {points}.' },
-  mr: { noData: 'डेटा नाही', chart: 'तक्ता', summary: '{title}: {type} तक्ता, {series} मालिका, {points} डेटा बिंदू.' },
-  te: { noData: 'డేటా లేదు', chart: 'చార్ట్', summary: '{title}: {type} చార్ట్, {series} శ్రేణులు, {points} డేటా పాయింట్లు.' },
-  tr: { noData: 'Veri yok', chart: 'Grafik', summary: '{title}: {series} seri ve {points} veri noktası içeren {type} grafiği.' },
-  ta: { noData: 'தரவு இல்லை', chart: 'விளக்கப்படம்', summary: '{title}: {type} விளக்கப்படம், {series} தொடர்கள், {points} தரவுப் புள்ளிகள்.' },
-  vi: { noData: 'Không có dữ liệu', chart: 'Biểu đồ', summary: '{title}: biểu đồ {type} với {series} chuỗi, {points} điểm dữ liệu.' },
-  ko: { noData: '데이터 없음', chart: '차트', summary: '{title}: {type} 차트, {series}개 시리즈, {points}개 데이터 포인트.' },
-  // Nusantara pack
-  jv: { noData: 'Ora ana data', chart: 'Grafik', summary: '{title}: grafik {type} kanthi {series} seri, {points} titik data.' },
-  su: { noData: 'Euweuh data', chart: 'Grafik', summary: '{title}: grafik {type} kalawan {series} séri, {points} titik data.' },
-  ms: { noData: 'Tiada data', chart: 'Carta', summary: '{title}: carta {type} dengan {series} siri, {points} titik data.' },
 };
+
+const KEYS = ['noData', 'chart', 'summary'];
+const PLACEHOLDERS = ['{title}', '{type}', '{series}', '{points}'];
+
+/**
+ * Register (or replace) the catalog for one language.
+ * @param {string} tag BCP-47 tag; only the base language is used ('pt-BR' -> 'pt')
+ * @param {{noData:string, chart:string, summary:string}} catalog
+ */
+export function registerLocale(tag, catalog) {
+  const base = String(tag || '').toLowerCase().split(/[-_]/)[0];
+  if (!base) throw new Error('LombokCharts: registerLocale needs a language tag');
+  for (const k of KEYS) {
+    if (!catalog || typeof catalog[k] !== 'string' || !catalog[k]) throw new Error(`LombokCharts: locale '${base}' is missing '${k}'`);
+  }
+  for (const p of PLACEHOLDERS) {
+    if (!catalog.summary.includes(p)) throw new Error(`LombokCharts: locale '${base}' summary is missing ${p}`);
+  }
+  MESSAGES[base] = { noData: catalog.noData, chart: catalog.chart, summary: catalog.summary };
+}
+
+/** Register several catalogs at once, e.g. registerLocales(LOCALES). @param {Record<string, any>} catalogs */
+export function registerLocales(catalogs) {
+  for (const tag of Object.keys(catalogs || {})) registerLocale(tag, catalogs[tag]);
+}
 
 const RTL = new Set(['ar', 'ur', 'he', 'fa']);
 

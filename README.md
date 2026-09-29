@@ -105,7 +105,7 @@ and government or NGO open-data portals. It is not tied to any single applicatio
 | Libraries are fast *or* crisp, not both | One API over **Canvas** (millions of points) and **SVG** (vector, inspectable) |
 | Millions of points freeze the browser | Typed-array pipeline + **LTTB / min-max decimation** |
 | Live data needs custom plumbing | Built-in **ring buffer**, rAF-coalesced `appendData`, WebSocket / SSE / async iterator |
-| Charts are English-only and inaccessible | Built-in **i18n (Core-20 + Nusantara, RTL)**, ARIA role/summary, locale-aware ticks |
+| Charts are English-only and inaccessible | Opt-in **i18n (Core-20 + Nusantara, RTL)**, ARIA role/summary, locale-aware ticks |
 | Logic cannot be reused outside JS | Pure DOM-free core with a **normative SPEC + cross-language test vectors** for ports |
 
 Compared with Chart.js, ECharts, uPlot, Plotly and D3, LombokCharts is the only one that combines
@@ -235,14 +235,29 @@ const svg = c.toSVG(); // serialized <svg> markup
 
 ### Internationalization
 
+English is built in. The other 22 catalogs (Core-20 + jv, su, ms) are **opt-in**, so they add
+nothing to your bundle unless you load them (~1.8 KB gzip for all of them):
+
 ```js
+import { chart, registerLocales } from "lombokcharts";
+import { LOCALES } from "lombokcharts/i18n";
+
+registerLocales(LOCALES);            // all languages, or just one: registerLocales({ id: LOCALES.id })
 chart("#app", { mark: "bar", data, title: "Omzet", locale: "id-ID" });
 // a11y summary: "Omzet: grafik bar dengan 1 seri, 4 titik data."
 // y ticks via Intl.NumberFormat (compact) — "1,5 rb"; Arabic/Urdu set dir="rtl".
 ```
 
-Built-in catalogs: en, zh, hi, es, fr, ar, bn, pt, ru, ur, id, de, ja, sw, mr, te, tr, ta, vi, ko
-(Core-20) plus jv, su, ms (`src/i18n/messages.js`).
+With script tags, load the add-on after the main bundle; it registers every catalog automatically:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/lombokcharts/dist/lombok-charts.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lombokcharts/dist/lombok-charts-i18n.umd.min.js"></script>
+```
+
+Opt-in catalogs: zh, hi, es, fr, ar, bn, pt, ru, ur, id, de, ja, sw, mr, te, tr, ta, vi, ko
+(Core-20 with en) plus jv, su, ms (`src/i18n/locales.js`). Add your own with
+`registerLocale("nl", { noData, chart, summary })`.
 
 ## API at a Glance
 
@@ -280,8 +295,9 @@ toggle LTTB, and switch Canvas vs SVG.
 
 | Build     | File                            | Raw    | Gzipped |
 | --------- | ------------------------------- | ------ | ------- |
-| ESM (min) | `dist/lombok-charts.esm.min.js` | ~56 KB | ~19 KB  |
-| UMD (min) | `dist/lombok-charts.umd.min.js` | ~57 KB | ~19 KB  |
+| ESM (min) | `dist/lombok-charts.esm.min.js` | ~58 KB | ~19 KB  |
+| UMD (min) | `dist/lombok-charts.umd.min.js` | ~59 KB | ~20 KB  |
+| i18n add-on (optional) | `dist/lombok-charts-i18n.umd.min.js` | ~5 KB | ~2 KB |
 
 These cover the **full** library with all 13 marks registered. Importing `Chart` plus only the
 marks you need lets your bundler tree-shake the rest for a smaller footprint.

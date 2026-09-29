@@ -12,6 +12,11 @@
       "require": "./dist/lombok-charts.cjs",
       "default": "./dist/lombok-charts.esm.js"
     },
+    "./i18n": {
+      "import": "./src/i18n/locales.js",
+      "require": "./dist/lombok-charts-i18n.cjs",
+      "default": "./dist/lombok-charts-i18n.esm.js"
+    },
     "./dist/*": "./dist/*"
   },
   "sideEffects": false,

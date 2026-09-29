@@ -6,6 +6,7 @@
 // the marks you need (tree-shaking drops the rest).
 import { Chart } from './core/Chart.js';
 import { registerMark, getMark, hasMark, listMarks } from './registry.js';
+import { registerLocales } from './i18n/messages.js';
 
 // Core marks
 import { BarMark } from './marks/core/BarMark.js';
@@ -53,7 +54,7 @@ export { darkTheme } from './theme/dark.js';
 export { lttb, minMaxDecimate } from './data/decimate.js';
 export { RingBuffer } from './data/ringbuffer.js';
 export * from './scales/index.js';
-export { MESSAGES, messages, summarize, resolveLocale, isRTL, numberFormatter } from './i18n/messages.js';
+export { MESSAGES, messages, summarize, resolveLocale, isRTL, numberFormatter, registerLocale, registerLocales } from './i18n/messages.js';
 
 export const version = '0.1.6'; // x-release-please-version
-export default { Chart, chart, registerMark, version };
+export default { Chart, chart, registerMark, registerLocales, version };

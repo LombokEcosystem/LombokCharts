@@ -29,7 +29,7 @@ src/
   stream/     live scheduler + source connectors
   interaction/tooltip, legend, zoom/pan, quadtree
   theme/      design tokens (light/dark)
-  i18n/       built-in UI strings (Core-20 + Nusantara), RTL, Intl number labels
+  i18n/       UI strings (en built in; Core-20 + Nusantara opt-in via locales.js), RTL, Intl labels
 tests/        zero-dependency test harness
 vectors/      normative cross-language test vectors for the pure core
 examples/     HTML demos (styled with LombokCSS)
