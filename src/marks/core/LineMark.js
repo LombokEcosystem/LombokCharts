@@ -36,7 +36,6 @@ export class LineMark extends Mark {
       if (s.visible === false) return;
       let xs = s.xs, ys = s.ys, count = s.count;
       const target = Math.max(2, Math.floor(area.width * 2));
-      let mapIdx = null;
       if (opts.decimate !== false && count > target && sx.kind !== 'band') {
         const dec = lttb(xs, ys, count, target);
         xs = dec.xs; ys = dec.ys; count = dec.count;

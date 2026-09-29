@@ -30,7 +30,6 @@ export class Renderer {
     this.type = 'abstract';
   }
 
-  /* eslint-disable no-unused-vars */
   mount() { throw new Error('Renderer.mount not implemented'); }
   resize(w, h) { this.width = w; this.height = h; }
   beginFrame() {}
@@ -50,7 +49,6 @@ export class Renderer {
   /** @returns {string|null} serialized SVG markup — SVG only. */
   toSVGString() { return null; }
   destroy() {}
-  /* eslint-enable no-unused-vars */
 }
 
 // --- WebGL adapter (architectural stub) -------------------------------------

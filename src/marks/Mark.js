@@ -18,14 +18,12 @@ export class Mark {
    * @param {Array<Object>} [rawData]
    * @returns {{x:{type:string,values?:string[],domain?:number[]}, y:{domain:number[]}}|null}
    */
-  // eslint-disable-next-line no-unused-vars
   domains(series, opts, rawData) { return null; }
   /**
    * Draw the mark. Concrete marks must override this.
    * @param {import('../core/Chart.js').DrawContext} ctx
    * @returns {void}
    */
-  // eslint-disable-next-line no-unused-vars
   draw(ctx) { throw new Error('Mark.draw not implemented'); }
   /**
    * Legend entries for this mark, if any.
@@ -33,6 +31,5 @@ export class Mark {
    * @param {Object} [ctx]
    * @returns {{label:string,color:string}[]|null}
    */
-  // eslint-disable-next-line no-unused-vars
   legendItems(series, ctx) { return null; }
 }

@@ -22,7 +22,7 @@ export class HistogramMark extends Mark {
     return { x: { type: 'linear', domain: [b.min, b.max] }, y: { domain: [0, Math.max(...b.counts) * 1.05] } };
   }
   draw(ctx) {
-    const { r, sx, sy, theme } = ctx;
+    const { r, sx, sy } = ctx;
     const b = this._bins(ctx);
     const color = this.options.color || ctx.color.byIndex(0);
     const y0 = sy(0);

@@ -9,7 +9,6 @@ var Renderer = class {
     this.height = size.height;
     this.type = "abstract";
   }
-  /* eslint-disable no-unused-vars */
   mount() {
     throw new Error("Renderer.mount not implemented");
   }
@@ -51,7 +50,6 @@ var Renderer = class {
   }
   destroy() {
   }
-  /* eslint-enable no-unused-vars */
 };
 
 // src/utils/dpr.js
@@ -1512,7 +1510,6 @@ var Chart = class {
     return linearScale(hint.domain, range);
   }
   _layout() {
-    const t = this.theme;
     const hasTitle = !!this.config.title;
     const markDef = this._resolveMark();
     const horizontal = markDef.type === "bar" && markDef.mode === "horizontal";
@@ -1927,7 +1924,6 @@ var Mark = class {
    * @param {Array<Object>} [rawData]
    * @returns {{x:{type:string,values?:string[],domain?:number[]}, y:{domain:number[]}}|null}
    */
-  // eslint-disable-next-line no-unused-vars
   domains(series, opts, rawData) {
     return null;
   }
@@ -1936,7 +1932,6 @@ var Mark = class {
    * @param {import('../core/Chart.js').DrawContext} ctx
    * @returns {void}
    */
-  // eslint-disable-next-line no-unused-vars
   draw(ctx) {
     throw new Error("Mark.draw not implemented");
   }
@@ -1946,7 +1941,6 @@ var Mark = class {
    * @param {Object} [ctx]
    * @returns {{label:string,color:string}[]|null}
    */
-  // eslint-disable-next-line no-unused-vars
   legendItems(series, ctx) {
     return null;
   }
@@ -1955,7 +1949,6 @@ var Mark = class {
 // src/marks/core/BarMark.js
 var BarMark = class extends Mark {
   domains(series, opts) {
-    const cats = series[0].categories || series[0].xs;
     const mode = opts.mode || "vertical";
     let ymin = 0, ymax = -Infinity;
     if (mode === "stacked") {
@@ -1990,7 +1983,7 @@ var BarMark = class extends Mark {
     return { x: { type: "band", values }, y: { domain: [ymin, ymax * 1.05] } };
   }
   draw(ctx) {
-    const { r, sx, sy, series, opts, area, theme } = ctx;
+    const { r, sx, sy, series, opts, theme } = ctx;
     const mode = opts.mode || "vertical";
     const cats = series[0].categories || [];
     const band = sx.bandwidth;
@@ -2201,7 +2194,6 @@ var LineMark = class extends Mark {
       if (s.visible === false) return;
       let xs = s.xs, ys = s.ys, count = s.count;
       const target = Math.max(2, Math.floor(area.width * 2));
-      let mapIdx = null;
       if (opts.decimate !== false && count > target && sx.kind !== "band") {
         const dec = lttb(xs, ys, count, target);
         xs = dec.xs;
@@ -2688,7 +2680,7 @@ var HistogramMark = class extends Mark {
     return { x: { type: "linear", domain: [b.min, b.max] }, y: { domain: [0, Math.max(...b.counts) * 1.05] } };
   }
   draw(ctx) {
-    const { r, sx, sy, theme } = ctx;
+    const { r, sx, sy } = ctx;
     const b = this._bins(ctx);
     const color = this.options.color || ctx.color.byIndex(0);
     const y0 = sy(0);
@@ -2758,7 +2750,6 @@ var FunnelMark = class extends Mark {
     const max = Math.max(...data.map((d) => +d[vk])) || 1;
     const h = area.height / data.length;
     const cx = area.x + area.width / 2;
-    let prevHalf = (data.length ? +data[0][vk] / max : 1) * (area.width / 2);
     data.forEach((d, i) => {
       const w0 = +d[vk] / max * (area.width / 2);
       const next = i < data.length - 1 ? +data[i + 1][vk] / max * (area.width / 2) : w0 * 0.85;

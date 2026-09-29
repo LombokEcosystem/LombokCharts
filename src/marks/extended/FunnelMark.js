@@ -12,7 +12,6 @@ export class FunnelMark extends Mark {
     const max = Math.max(...data.map((d) => +d[vk])) || 1;
     const h = area.height / data.length;
     const cx = area.x + area.width / 2;
-    let prevHalf = (data.length ? +data[0][vk] / max : 1) * (area.width / 2);
     data.forEach((d, i) => {
       const w0 = (+d[vk] / max) * (area.width / 2);
       const next = i < data.length - 1 ? (+data[i + 1][vk] / max) * (area.width / 2) : w0 * 0.85;

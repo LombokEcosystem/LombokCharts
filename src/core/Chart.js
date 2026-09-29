@@ -19,7 +19,7 @@ import { categoricalScale } from '../scales/color.js';
 import { lightTheme } from '../theme/light.js';
 import { darkTheme } from '../theme/dark.js';
 import { deepMerge } from '../utils/math.js';
-import { FrameScheduler, raf } from '../utils/raf.js';
+import { raf } from '../utils/raf.js';
 import { Quadtree } from '../interaction/quadtree.js';
 import { Tooltip, escapeHtml } from '../interaction/tooltip.js';
 import { Legend } from '../interaction/legend.js';
@@ -188,7 +188,6 @@ export class Chart {
   }
 
   _layout() {
-    const t = this.theme;
     const hasTitle = !!this.config.title;
     const markDef = this._resolveMark();
     const horizontal = markDef.type === 'bar' && markDef.mode === 'horizontal';
