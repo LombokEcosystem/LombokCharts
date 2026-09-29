@@ -53,6 +53,7 @@ export { darkTheme } from './theme/dark.js';
 export { lttb, minMaxDecimate } from './data/decimate.js';
 export { RingBuffer } from './data/ringbuffer.js';
 export * from './scales/index.js';
+export { MESSAGES, messages, summarize, resolveLocale, isRTL, numberFormatter } from './i18n/messages.js';
 
-export const version = '0.1.2';
+export const version = '0.1.6'; // x-release-please-version
 export default { Chart, chart, registerMark, version };

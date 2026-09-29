@@ -28,7 +28,7 @@ jobs:
       - name: Scope package for GPR
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          npm pkg set name="@codinglombok/lombok-charts"
+          npm pkg set name="@codinglombok/lombokcharts"
           npm pkg set version="$VERSION"
       - run: npm publish
         env:
@@ -67,7 +67,7 @@ jobs:
       - name: Build and push
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          IMAGE="ghcr.io/codinglombok/lombok-charts"
+          IMAGE="ghcr.io/codinglombok/lombokcharts"
           docker build -t "$IMAGE:$VERSION" -t "$IMAGE:latest" .
           docker push "$IMAGE:$VERSION"
           docker push "$IMAGE:latest"
@@ -95,8 +95,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          GROUP="com.github.codinglombok"
-          ARTIFACT="lombok-charts"
+          GROUP="io.lombok"
+          ARTIFACT="lombokcharts"
 
           mkdir -p src/main/resources/META-INF/resources/webjars/$ARTIFACT/$VERSION
           cp dist/* src/main/resources/META-INF/resources/webjars/$ARTIFACT/$VERSION/
@@ -163,7 +163,7 @@ jobs:
           <Project Sdk="Microsoft.NET.Sdk">
             <PropertyGroup>
               <TargetFramework>netstandard2.0</TargetFramework>
-              <PackageId>codinglombok.LombokCharts</PackageId>
+              <PackageId>CodingLombok.Charts</PackageId>
               <Version>$VERSION</Version>
               <Authors>codinglombok</Authors>
               <Description>Zero-dependency charting library — Canvas/SVG, LTTB, streaming</Description>
@@ -222,18 +222,18 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
 
-          mkdir -p lib/lombok-charts
-          cp dist/* lib/lombok-charts/
+          mkdir -p lib/lombokcharts
+          cp dist/* lib/lombokcharts/
 
-          cat > lib/lombok-charts.rb <<'RUBY'
+          cat > lib/lombokcharts.rb <<'RUBY'
           module LombokCharts
             VERSION = File.read(File.join(__dir__, '..', 'package.json'))[/"version":\s*"([^"]+)"/, 1]
           end
           RUBY
 
-          cat > lombok-charts.gemspec <<EOF
+          cat > lombokcharts.gemspec <<EOF
           Gem::Specification.new do |s|
-            s.name        = 'lombok-charts'
+            s.name        = 'lombokcharts'
             s.version     = '$VERSION'
             s.summary     = 'Zero-dependency charting library'
             s.description = 'Canvas/SVG chart library with LTTB decimation and real-time streaming'
@@ -251,6 +251,6 @@ jobs:
           CRED
           chmod 0600 ~/.gem/credentials
 
-          gem build lombok-charts.gemspec
+          gem build lombokcharts.gemspec
           gem push --key github --host https://rubygems.pkg.github.com/codinglombok \
-            lombok-charts-$VERSION.gem
+            lombokcharts-$VERSION.gem

@@ -1,7 +1,7 @@
 // tests/run.js — runs every *.test.js file and prints a summary.
 import { results } from './_t.js';
 
-const files = ['./scale.test.js', './decimate.test.js', './ringbuffer.test.js', './dom-smoke.test.js'];
+const files = ['./scale.test.js', './decimate.test.js', './ringbuffer.test.js', './vectors.test.js', './i18n.test.js', './dom-smoke.test.js'];
 console.log('\nLombokCharts test suite\n');
 for (const f of files) {
   console.log('• ' + f.replace('./', '').replace('.test.js', ''));

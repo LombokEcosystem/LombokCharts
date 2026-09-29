@@ -30,7 +30,7 @@ You cannot claim anything until it's proven in real browsers and installable.
 - Manually verify + fix every visual defect the snapshots surface (label collisions, axis density, legend fit, DPR crispness, RTL).
 - ~~**Publish to npm** via the existing release-please workflow (provenance) and confirm the jsDelivr/unpkg CDN URLs resolve; switch template/example CDN references to the published package.~~ ✅ Done (v0.1.2 on npm, jsDelivr + unpkg live, release-please + provenance active).
 - Wire an interactive example harness (a real `dev` server page) so contributors see changes live.
-- **Exit criteria:** all marks render pixel-checked across 3 engines; ~~`npm i lombok-charts` works; CDN live;~~ visual CI green.
+- **Exit criteria:** all marks render pixel-checked across 3 engines; ~~`npm i lombokcharts` works; CDN live;~~ visual CI green.
 
 ## 0.3 — Robustness & developer experience — **M**
 

@@ -6,3 +6,26 @@ coverage/
 _site/
 .release/
 *.patch
+# ── Documents are PRIVATE by default ───────────────────────────────────────
+# Rule from the owner (@codinglombok): no document (*.md / *.MD — masterplan,
+# architecture, SPEC, changelog_*, map_*, …) is committed or published without
+# the owner's explicit approval. Everything is ignored; only documents the
+# owner deliberately selected are re-included below. To publish a new doc,
+# get owner approval first, then add a `!path` line here in the same PR.
+*.md
+*.MD
+docs/*
+!/README.md
+!/CHANGELOG.md
+!/CODE_OF_CONDUCT.md
+!/CONTRIBUTING.md
+!/DISTRIBUTION.md
+!/ROADMAP.md
+!/SECURITY.md
+!/TESTING.md
+!/.github/PULL_REQUEST_TEMPLATE.md
+!/docs/api.md
+!/docs/architecture.md
+!/docs/porting.md
+!/docs/theming.md
+!/templates/*/README.md

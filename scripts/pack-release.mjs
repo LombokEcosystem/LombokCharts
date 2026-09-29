@@ -9,7 +9,7 @@ import path from 'node:path';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
-const name = `lombok-charts-${pkg.version}`;
+const name = `lombokcharts-${pkg.version}`;
 const stage = path.join(root, '.release', name);
 fs.rmSync(path.join(root, '.release'), { recursive: true, force: true });
 fs.mkdirSync(stage, { recursive: true });

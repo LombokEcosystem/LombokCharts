@@ -1,5 +1,8 @@
 # LombokCharts
 
+> Universal zero-dependency charting library — Canvas/SVG, LTTB decimation, real-time streaming.
+> Part of [Lombok Ecosystem](https://github.com/codinglombok). Apache-2.0.
+
 [![LombokCharts Preview](assets/social-preview.png)](https://codinglombok.github.io/LombokCharts/)
 
 ---
@@ -20,10 +23,10 @@
 
 ## npm
 
-[![npm version](https://img.shields.io/npm/v/lombok-charts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombok-charts)
-[![npm downloads](https://img.shields.io/npm/dm/lombok-charts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombok-charts)
-[![npm total](https://img.shields.io/npm/dt/lombok-charts.svg?style=flat-square&logo=npm&label=total)](https://www.npmjs.com/package/lombok-charts)
-[![jsDelivr hits](https://img.shields.io/jsdelivr/npm/hm/lombok-charts.svg?style=flat-square&logo=jsdelivr)](https://www.jsdelivr.com/package/npm/lombok-charts)
+[![npm version](https://img.shields.io/npm/v/lombokcharts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombokcharts)
+[![npm downloads](https://img.shields.io/npm/dm/lombokcharts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombokcharts)
+[![npm total](https://img.shields.io/npm/dt/lombokcharts.svg?style=flat-square&logo=npm&label=total)](https://www.npmjs.com/package/lombokcharts)
+[![jsDelivr hits](https://img.shields.io/jsdelivr/npm/hm/lombokcharts.svg?style=flat-square&logo=jsdelivr)](https://www.jsdelivr.com/package/npm/lombokcharts)
 
 ---
 
@@ -39,9 +42,9 @@
 
 ## Packagist
 
-[![Packagist version](https://img.shields.io/packagist/v/codinglombok/lombok-charts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombok-charts)
-[![Packagist downloads](https://img.shields.io/packagist/dt/codinglombok/lombok-charts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombok-charts)
-[![Packagist license](https://img.shields.io/packagist/l/codinglombok/lombok-charts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombok-charts)
+[![Packagist version](https://img.shields.io/packagist/v/codinglombok/lombokcharts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombokcharts)
+[![Packagist downloads](https://img.shields.io/packagist/dt/codinglombok/lombokcharts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombokcharts)
+[![Packagist license](https://img.shields.io/packagist/l/codinglombok/lombokcharts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombokcharts)
 
 ---
 
@@ -71,21 +74,6 @@ git clone https://github.com/codinglombok/LombokCharts.git
 
 ---
 
-## Lombok Ecosystem
-
-| Project | Description |
-|---|---|
-| [![LombokClarion](https://img.shields.io/badge/LombokClarion-PHP%20Full%20Stack-blue?style=flat-square&logo=php&logoColor=white)](https://github.com/codinglombok/LombokClarion) | PHP 8.3+ full-stack framework — 31 packages, Apache-2.0 |
-| [![LombokCSS](https://img.shields.io/badge/LombokCSS-Token--First%20CSS-blue?style=flat-square&logo=css3&logoColor=white)](https://github.com/codinglombok/LombokCSS) | Token-first CSS framework — npm + RubyGem + jsDelivr |
-| [![LombokCharts](https://img.shields.io/badge/LombokCharts-Charting%20Library-blue?style=flat-square&logo=javascript&logoColor=white)](https://github.com/codinglombok/LombokCharts) | Zero-dependency charting — Canvas/SVG, LTTB, streaming |
-| [![LombokQRCode](https://img.shields.io/badge/LombokQRCode-QR%20%2B%20Code128-blue?style=flat-square&logo=typescript&logoColor=white)](https://github.com/codinglombok/LombokQRCode) | Pure-JS QR code + Code128 barcode toolkit |
-| [![LombokTableSheet](https://img.shields.io/badge/LombokTableSheet-Spreadsheet%20Engine-blue?style=flat-square&logo=typescript&logoColor=white)](https://github.com/codinglombok/LombokTableSheet) | Spreadsheet engine — formulas, i18n, ANOVA, plugins |
-| [![LombokAnimate](https://img.shields.io/badge/LombokAnimate-Web%20Animations-blue?style=flat-square&logo=javascript&logoColor=white)](https://github.com/codinglombok/LombokAnimate) | Modular web animation library — scroll, parallax, morph |
-| [![LombokECC](https://img.shields.io/badge/LombokECC-Reed--Solomon-blue?style=flat-square&logo=typescript&logoColor=white)](https://github.com/codinglombok/LombokECC) | Reed-Solomon (255,239) — TS + PHP + Python + Go + Rust + C++ |
-| [![LombokPDF](https://img.shields.io/badge/LombokPDF-PDF%20Generator-blue?style=flat-square&logo=adobeacrobatreader&logoColor=white)](https://github.com/codinglombok/LombokPDF) | PDF generation and manipulation toolkit |
-
----
-
 A zero-dependency charting library for the browser. It pairs a small grammar-of-graphics
 core (Data → Scale → Mark) with pluggable Canvas and SVG renderers, LTTB decimation, and a
 real-time streaming layer — so the same API draws a five-point bar chart or a five-million-point
@@ -104,16 +92,36 @@ line without changing shape.
 | [![Monitoring Dashboard](assets/previews/monitoring.png)](https://codinglombok.github.io/LombokCharts/templates/monitoring-dashboard/index.html) | [![CRM Dashboard](assets/previews/crm.png)](https://codinglombok.github.io/LombokCharts/templates/crm-dashboard/index.html)                   |
 | [![Examples Gallery](assets/previews/examples.png)](https://codinglombok.github.io/LombokCharts/examples/index.html)                             | [![Stress Benchmark](assets/previews/stress.png)](https://codinglombok.github.io/LombokCharts/examples/stress.html)                           |
 
+## Why this library? (Mengapa library ini?)
+
+LombokCharts is a standalone, general-purpose charting library for **anyone who needs to turn
+numbers into pictures** — web developers, data/BI teams, fintech and trading desks, SRE and
+monitoring dashboards, IoT and industrial HMI/kiosk panels, scientific and education tools,
+and government or NGO open-data portals. It is not tied to any single application or framework.
+
+| Problem | How LombokCharts solves it |
+|---|---|
+| Chart libraries pull in large dependency trees | **Zero runtime dependencies**, ~19 KB gzip full build, tree-shakeable marks |
+| Libraries are fast *or* crisp, not both | One API over **Canvas** (millions of points) and **SVG** (vector, inspectable) |
+| Millions of points freeze the browser | Typed-array pipeline + **LTTB / min-max decimation** |
+| Live data needs custom plumbing | Built-in **ring buffer**, rAF-coalesced `appendData`, WebSocket / SSE / async iterator |
+| Charts are English-only and inaccessible | Built-in **i18n (Core-20 + Nusantara, RTL)**, ARIA role/summary, locale-aware ticks |
+| Logic cannot be reused outside JS | Pure DOM-free core with a **normative SPEC + cross-language test vectors** for ports |
+
+Compared with Chart.js, ECharts, uPlot, Plotly and D3, LombokCharts is the only one that combines
+zero dependencies, a grammar-of-graphics core, dual Canvas/SVG output, built-in LTTB streaming
+and cross-language test vectors for porting the pure core.
+
 ## Quick Start
 
 ### npm / bundler
 
 ```bash
-npm install lombok-charts
+npm install lombokcharts
 ```
 
 ```js
-import { chart } from "lombok-charts";
+import { chart } from "lombokcharts";
 
 chart("#app", {
   mark: "bar",
@@ -131,7 +139,7 @@ chart("#app", {
 
 ```html
 <div id="app" style="width:600px; height:400px"></div>
-<script src="https://cdn.jsdelivr.net/npm/lombok-charts/dist/lombok-charts.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lombokcharts/dist/lombok-charts.umd.min.js"></script>
 <script>
   LombokCharts.chart("#app", {
     mark: "bar",
@@ -150,10 +158,10 @@ Other CDN options (pinned version, ESM, unpkg) are listed in [`DISTRIBUTION.md`]
 ### Composer (PHP projects)
 
 ```bash
-composer require codinglombok/lombok-charts
+composer require codinglombok/lombokcharts
 ```
 
-Then reference `vendor/codinglombok/lombok-charts/dist/lombok-charts.umd.min.js` in your HTML.
+Then reference `vendor/codinglombok/lombokcharts/dist/lombok-charts.umd.min.js` in your HTML.
 
 ## Chart Types
 
@@ -225,6 +233,17 @@ const png = c.toPNG(); // data URL
 const svg = c.toSVG(); // serialized <svg> markup
 ```
 
+### Internationalization
+
+```js
+chart("#app", { mark: "bar", data, title: "Omzet", locale: "id-ID" });
+// a11y summary: "Omzet: grafik bar dengan 1 seri, 4 titik data."
+// y ticks via Intl.NumberFormat (compact) — "1,5 rb"; Arabic/Urdu set dir="rtl".
+```
+
+Built-in catalogs: en, zh, hi, es, fr, ar, bn, pt, ru, ur, id, de, ja, sw, mr, te, tr, ta, vi, ko
+(Core-20) plus jv, su, ms (`src/i18n/messages.js`).
+
 ## API at a Glance
 
 ```javascript
@@ -288,6 +307,41 @@ See [`ROADMAP.md`](ROADMAP.md) for the full 0.1 → 1.0 plan. Next priorities:
 - Full ARIA accessibility and keyboard navigation (0.4)
 - WebGL renderer for extreme point counts (0.5)
 - Framework wrappers: React, Vue, Svelte, Angular (0.6)
+
+## Standards implemented
+
+| Standard | Where |
+|---|---|
+| WAI-ARIA 1.2 (`role="img"`, `aria-label`, `aria-pressed`) | chart surface, legend toggles |
+| BCP 47 language tags + ECMA-402 `Intl.NumberFormat` | `config.locale`, tick labels |
+| W3C SVG 1.1 / 2 | `SvgRenderer`, `toSVG()` |
+| WHATWG HTML Canvas 2D, W3C PNG (ISO/IEC 15948) | `CanvasRenderer`, `toPNG()` |
+| WHATWG Server-Sent Events, RFC 6455 WebSocket | `chart.stream(...)` |
+| ECMAScript 2021 (ECMA-262), ES modules + CommonJS + UMD | `dist/` builds |
+| Semantic Versioning 2.0, Conventional Commits, Keep a Changelog | release process |
+
+Behavior of the portable core is pinned by the cross-language vectors in
+[`vectors/lombokcharts-vectors-v1.json`](vectors/lombokcharts-vectors-v1.json) (checked by `tests/vectors.test.js`).
+
+## Lombok Ecosystem
+
+LombokCharts works alongside other Lombok Ecosystem libraries — they are optional companions,
+never required dependencies (and none of them owns LombokCharts):
+
+| Project | Description |
+|---|---|
+| [![LombokClarion](https://img.shields.io/badge/LombokClarion-PHP%20Full%20Stack-blue?style=flat-square&logo=php&logoColor=white)](https://github.com/codinglombok/LombokClarion) | PHP 8.3+ full-stack framework — 31 packages, Apache-2.0 |
+| [![LombokCSS](https://img.shields.io/badge/LombokCSS-Token--First%20CSS-blue?style=flat-square&logo=css3&logoColor=white)](https://github.com/codinglombok/LombokCSS) | Token-first CSS framework — npm + RubyGem + jsDelivr |
+| [![LombokCharts](https://img.shields.io/badge/LombokCharts-Charting%20Library-blue?style=flat-square&logo=javascript&logoColor=white)](https://github.com/codinglombok/LombokCharts) | Zero-dependency charting — Canvas/SVG, LTTB, streaming |
+| [![LombokQRCode](https://img.shields.io/badge/LombokQRCode-QR%20%2B%20Code128-blue?style=flat-square&logo=typescript&logoColor=white)](https://github.com/codinglombok/LombokQRCode) | Pure-JS QR code + Code128 barcode toolkit |
+| [![LombokTableSheet](https://img.shields.io/badge/LombokTableSheet-Spreadsheet%20Engine-blue?style=flat-square&logo=typescript&logoColor=white)](https://github.com/codinglombok/LombokTableSheet) | Spreadsheet engine — formulas, i18n, ANOVA, plugins |
+| [![LombokAnimate](https://img.shields.io/badge/LombokAnimate-Web%20Animations-blue?style=flat-square&logo=javascript&logoColor=white)](https://github.com/codinglombok/LombokAnimate) | Modular web animation library — scroll, parallax, morph |
+| [![LombokECC](https://img.shields.io/badge/LombokECC-Reed--Solomon-blue?style=flat-square&logo=typescript&logoColor=white)](https://github.com/codinglombok/LombokECC) | Reed-Solomon (255,239) — TS + PHP + Python + Go + Rust + C++ |
+| [![LombokPDF](https://img.shields.io/badge/LombokPDF-PDF%20Generator-blue?style=flat-square&logo=adobeacrobatreader&logoColor=white)](https://github.com/codinglombok/LombokPDF) | PDF generation and manipulation toolkit |
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 
