@@ -3,7 +3,7 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "package-name": "lombokcharts",
+      "package-name": "lombok-charts",
       "component": "lombok-charts",
       "changelog-path": "CHANGELOG.md",
       "bump-minor-pre-major": true,
