@@ -110,8 +110,8 @@ Removes listeners, the `ResizeObserver`, the stream connection, and DOM nodes.
 ## Custom marks
 
 ```js
-import { Chart, registerMark } from 'lombok-charts';
-import { Mark } from 'lombok-charts'; // base class via deep import if needed
+import { Chart, registerMark } from 'lombokcharts';
+import { Mark } from 'lombokcharts'; // base class via deep import if needed
 
 class MyMark extends Mark {
   coordinate() { return 'cartesian'; }      // or 'none' for self-laid-out marks

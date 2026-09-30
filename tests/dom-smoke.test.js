@@ -5,7 +5,8 @@ import { test, ok, eq } from './_t.js';
 import { installDomShim } from './_domshim.js';
 installDomShim();
 
-const { chart } = await import('../src/lombok-charts.js');
+const { chart, registerLocales } = await import('../src/lombok-charts.js');
+const { LOCALES } = await import('../src/i18n/locales.js');
 
 function makeContainer() {
   const el = document.createElement('div');
@@ -69,4 +70,15 @@ test('appendData grows the live series', () => {
   c._streamSched._scheduler._task(); // flush synchronously
   ok(c.config.count > 1, 'count grew to ' + c.config.count);
   c.destroy();
+});
+
+test('locale localizes the a11y summary and sets dir=rtl for Arabic', () => {
+  registerLocales({ id: LOCALES.id });
+  const data = [{ label: 'A', value: 1500 }, { label: 'B', value: 2500 }];
+  const c = chart(makeContainer(), { data, mark: 'bar', animate: false, locale: 'id-ID', title: 'Omzet' });
+  eq(c._sr.textContent, 'Omzet: grafik bar dengan 1 seri, 2 titik data.');
+  c.destroy();
+  const r = chart(makeContainer(), { data, mark: 'bar', animate: false, locale: 'ar' });
+  eq(r._wrap.getAttribute('dir'), 'rtl');
+  r.destroy();
 });

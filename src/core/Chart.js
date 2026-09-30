@@ -19,13 +19,14 @@ import { categoricalScale } from '../scales/color.js';
 import { lightTheme } from '../theme/light.js';
 import { darkTheme } from '../theme/dark.js';
 import { deepMerge } from '../utils/math.js';
-import { FrameScheduler, raf } from '../utils/raf.js';
+import { raf } from '../utils/raf.js';
 import { Quadtree } from '../interaction/quadtree.js';
 import { Tooltip, escapeHtml } from '../interaction/tooltip.js';
 import { Legend } from '../interaction/legend.js';
 import { ZoomPan } from '../interaction/zoom.js';
 import { StreamScheduler } from '../stream/scheduler.js';
 import { connectStream } from '../stream/stream.js';
+import { messages, summarize, numberFormatter, isRTL } from '../i18n/messages.js';
 
 /**
  * @typedef {Object} DrawContext
@@ -101,7 +102,8 @@ export class Chart {
     // a11y
     const el = this.renderer.canvas || this.renderer.svg;
     el.setAttribute('role', 'img');
-    el.setAttribute('aria-label', (this.config.a11y && this.config.a11y.label) || this.config.title || 'Chart');
+    el.setAttribute('aria-label', (this.config.a11y && this.config.a11y.label) || this.config.title || messages(this.config.locale).chart);
+    if (isRTL(this.config.locale)) this._wrap.setAttribute('dir', 'rtl');
     this._sr = document.createElement('div');
     Object.assign(this._sr.style, { position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0 0 0 0)' });
     this._wrap.appendChild(this._sr);
@@ -186,7 +188,6 @@ export class Chart {
   }
 
   _layout() {
-    const t = this.theme;
     const hasTitle = !!this.config.title;
     const markDef = this._resolveMark();
     const horizontal = markDef.type === 'bar' && markDef.mode === 'horizontal';
@@ -244,6 +245,7 @@ export class Chart {
       if (this.config.axes !== false) this.scene.drawAxes(renderer, area, { x: sx, y: sy }, {
         xLabel: this.config.xLabel, yLabel: this.config.yLabel,
         showGrid: this.config.grid !== false,
+        xTickFormat: this.config.xTickFormat, yTickFormat: this.config.yTickFormat || this._localeFormat(),
       });
       mark.draw(ctx);
       // synchronized crosshair overlay (drawn on top of the mark)
@@ -270,13 +272,21 @@ export class Chart {
     renderer.text(renderer.width / 2, renderer.height / 2, msg, { fill: this.theme.semantic.negative, size: 14, align: 'center', baseline: 'middle', family: this.theme.typography.family });
     renderer.endFrame();
   }
+  /** Locale-aware y tick labels when `config.locale` is set (cached per locale). */
+  _localeFormat() {
+    const loc = this.config.locale;
+    if (!loc) return undefined;
+    if (this._fmtLocale !== loc) { this._fmtLocale = loc; this._fmt = numberFormatter(loc) || undefined; }
+    return this._fmt;
+  }
+
   _empty(renderer) {
-    renderer.text(renderer.width / 2, renderer.height / 2, this.config.emptyText || 'No data', { fill: this.theme.colors.muted, size: 14, align: 'center', baseline: 'middle', family: this.theme.typography.family });
+    renderer.text(renderer.width / 2, renderer.height / 2, this.config.emptyText || messages(this.config.locale).noData, { fill: this.theme.colors.muted, size: 14, align: 'center', baseline: 'middle', family: this.theme.typography.family });
   }
 
   _updateA11y(series, mark) {
     const total = series.reduce((s, x) => s + x.count, 0);
-    const summary = `${this.config.title || 'Chart'}: ${this._resolveMark().type} with ${series.length} series, ${total} data points.`;
+    const summary = summarize(this.config.locale, { title: this.config.title, type: this._resolveMark().type, series: series.length, points: total });
     this._sr.textContent = (this.config.a11y && this.config.a11y.description) || summary;
     const el = this.renderer.canvas || this.renderer.svg;
     el.setAttribute('aria-label', summary);

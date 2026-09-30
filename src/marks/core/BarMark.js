@@ -7,7 +7,6 @@ import { Mark } from '../Mark.js';
 
 export class BarMark extends Mark {
   domains(series, opts) {
-    const cats = series[0].categories || series[0].xs;
     const mode = opts.mode || 'vertical';
     let ymin = 0, ymax = -Infinity;
     if (mode === 'stacked') {
@@ -30,7 +29,7 @@ export class BarMark extends Mark {
   }
 
   draw(ctx) {
-    const { r, sx, sy, series, opts, area, theme } = ctx;
+    const { r, sx, sy, series, opts, theme } = ctx;
     const mode = opts.mode || 'vertical';
     const cats = series[0].categories || [];
     const band = sx.bandwidth;

@@ -9,7 +9,6 @@ var Renderer = class {
     this.height = size.height;
     this.type = "abstract";
   }
-  /* eslint-disable no-unused-vars */
   mount() {
     throw new Error("Renderer.mount not implemented");
   }
@@ -51,7 +50,6 @@ var Renderer = class {
   }
   destroy() {
   }
-  /* eslint-enable no-unused-vars */
 };
 
 // src/utils/dpr.js
@@ -1323,6 +1321,54 @@ function connectStream(source, onPoint, map = (v) => v) {
   throw new Error("connectStream: unsupported source type");
 }
 
+// src/i18n/messages.js
+var MESSAGES = {
+  en: { noData: "No data", chart: "Chart", summary: "{title}: {type} chart with {series} series, {points} data points." }
+};
+var KEYS = ["noData", "chart", "summary"];
+var PLACEHOLDERS = ["{title}", "{type}", "{series}", "{points}"];
+function registerLocale(tag, catalog) {
+  const base = String(tag || "").toLowerCase().split(/[-_]/)[0];
+  if (!base) throw new Error("LombokCharts: registerLocale needs a language tag");
+  for (const k of KEYS) {
+    if (!catalog || typeof catalog[k] !== "string" || !catalog[k]) throw new Error(`LombokCharts: locale '${base}' is missing '${k}'`);
+  }
+  for (const p of PLACEHOLDERS) {
+    if (!catalog.summary.includes(p)) throw new Error(`LombokCharts: locale '${base}' summary is missing ${p}`);
+  }
+  MESSAGES[base] = { noData: catalog.noData, chart: catalog.chart, summary: catalog.summary };
+}
+function registerLocales(catalogs) {
+  for (const tag of Object.keys(catalogs || {})) registerLocale(tag, catalogs[tag]);
+}
+var RTL = /* @__PURE__ */ new Set(["ar", "ur", "he", "fa"]);
+function resolveLocale(tag) {
+  if (!tag || typeof tag !== "string") return "en";
+  const base = tag.toLowerCase().split(/[-_]/)[0];
+  return Object.prototype.hasOwnProperty.call(MESSAGES, base) ? base : "en";
+}
+function messages(tag) {
+  return MESSAGES[resolveLocale(tag)];
+}
+function isRTL(tag) {
+  return !!tag && RTL.has(String(tag).toLowerCase().split(/[-_]/)[0]);
+}
+function summarize(tag, v) {
+  const m = messages(tag);
+  const vals = { title: v.title || m.chart, type: v.type, series: v.series, points: v.points };
+  return m.summary.replace(/\{(\w+)\}/g, (_, k) => String(vals[k]));
+}
+function numberFormatter(tag) {
+  if (!tag || typeof Intl === "undefined" || !Intl.NumberFormat) return null;
+  try {
+    const compact = new Intl.NumberFormat(tag, { notation: "compact", maximumFractionDigits: 1 });
+    const plain = new Intl.NumberFormat(tag, { maximumFractionDigits: 2 });
+    return (v) => Math.abs(v) >= 1e3 ? compact.format(v) : plain.format(v);
+  } catch {
+    return null;
+  }
+}
+
 // src/core/Chart.js
 var ALIASES = {
   column: { type: "bar", mode: "vertical" },
@@ -1379,7 +1425,8 @@ var Chart = class {
     this.renderer = new RendererCls(this._wrap, size).mount();
     const el = this.renderer.canvas || this.renderer.svg;
     el.setAttribute("role", "img");
-    el.setAttribute("aria-label", this.config.a11y && this.config.a11y.label || this.config.title || "Chart");
+    el.setAttribute("aria-label", this.config.a11y && this.config.a11y.label || this.config.title || messages(this.config.locale).chart);
+    if (isRTL(this.config.locale)) this._wrap.setAttribute("dir", "rtl");
     this._sr = document.createElement("div");
     Object.assign(this._sr.style, { position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)" });
     this._wrap.appendChild(this._sr);
@@ -1456,7 +1503,6 @@ var Chart = class {
     return linearScale(hint.domain, range);
   }
   _layout() {
-    const t = this.theme;
     const hasTitle = !!this.config.title;
     const markDef = this._resolveMark();
     const horizontal = markDef.type === "bar" && markDef.mode === "horizontal";
@@ -1516,7 +1562,9 @@ var Chart = class {
       if (this.config.axes !== false) this.scene.drawAxes(renderer, area, { x: sx, y: sy }, {
         xLabel: this.config.xLabel,
         yLabel: this.config.yLabel,
-        showGrid: this.config.grid !== false
+        showGrid: this.config.grid !== false,
+        xTickFormat: this.config.xTickFormat,
+        yTickFormat: this.config.yTickFormat || this._localeFormat()
       });
       mark.draw(ctx);
       if (this._crosshairX != null) {
@@ -1542,12 +1590,22 @@ var Chart = class {
     renderer.text(renderer.width / 2, renderer.height / 2, msg, { fill: this.theme.semantic.negative, size: 14, align: "center", baseline: "middle", family: this.theme.typography.family });
     renderer.endFrame();
   }
+  /** Locale-aware y tick labels when `config.locale` is set (cached per locale). */
+  _localeFormat() {
+    const loc = this.config.locale;
+    if (!loc) return void 0;
+    if (this._fmtLocale !== loc) {
+      this._fmtLocale = loc;
+      this._fmt = numberFormatter(loc) || void 0;
+    }
+    return this._fmt;
+  }
   _empty(renderer) {
-    renderer.text(renderer.width / 2, renderer.height / 2, this.config.emptyText || "No data", { fill: this.theme.colors.muted, size: 14, align: "center", baseline: "middle", family: this.theme.typography.family });
+    renderer.text(renderer.width / 2, renderer.height / 2, this.config.emptyText || messages(this.config.locale).noData, { fill: this.theme.colors.muted, size: 14, align: "center", baseline: "middle", family: this.theme.typography.family });
   }
   _updateA11y(series, mark) {
     const total = series.reduce((s, x) => s + x.count, 0);
-    const summary = `${this.config.title || "Chart"}: ${this._resolveMark().type} with ${series.length} series, ${total} data points.`;
+    const summary = summarize(this.config.locale, { title: this.config.title, type: this._resolveMark().type, series: series.length, points: total });
     this._sr.textContent = this.config.a11y && this.config.a11y.description || summary;
     const el = this.renderer.canvas || this.renderer.svg;
     el.setAttribute("aria-label", summary);
@@ -1859,7 +1917,6 @@ var Mark = class {
    * @param {Array<Object>} [rawData]
    * @returns {{x:{type:string,values?:string[],domain?:number[]}, y:{domain:number[]}}|null}
    */
-  // eslint-disable-next-line no-unused-vars
   domains(series, opts, rawData) {
     return null;
   }
@@ -1868,7 +1925,6 @@ var Mark = class {
    * @param {import('../core/Chart.js').DrawContext} ctx
    * @returns {void}
    */
-  // eslint-disable-next-line no-unused-vars
   draw(ctx) {
     throw new Error("Mark.draw not implemented");
   }
@@ -1878,7 +1934,6 @@ var Mark = class {
    * @param {Object} [ctx]
    * @returns {{label:string,color:string}[]|null}
    */
-  // eslint-disable-next-line no-unused-vars
   legendItems(series, ctx) {
     return null;
   }
@@ -1887,7 +1942,6 @@ var Mark = class {
 // src/marks/core/BarMark.js
 var BarMark = class extends Mark {
   domains(series, opts) {
-    const cats = series[0].categories || series[0].xs;
     const mode = opts.mode || "vertical";
     let ymin = 0, ymax = -Infinity;
     if (mode === "stacked") {
@@ -1922,7 +1976,7 @@ var BarMark = class extends Mark {
     return { x: { type: "band", values }, y: { domain: [ymin, ymax * 1.05] } };
   }
   draw(ctx) {
-    const { r, sx, sy, series, opts, area, theme } = ctx;
+    const { r, sx, sy, series, opts, theme } = ctx;
     const mode = opts.mode || "vertical";
     const cats = series[0].categories || [];
     const band = sx.bandwidth;
@@ -2133,7 +2187,6 @@ var LineMark = class extends Mark {
       if (s.visible === false) return;
       let xs = s.xs, ys = s.ys, count = s.count;
       const target = Math.max(2, Math.floor(area.width * 2));
-      let mapIdx = null;
       if (opts.decimate !== false && count > target && sx.kind !== "band") {
         const dec = lttb(xs, ys, count, target);
         xs = dec.xs;
@@ -2620,7 +2673,7 @@ var HistogramMark = class extends Mark {
     return { x: { type: "linear", domain: [b.min, b.max] }, y: { domain: [0, Math.max(...b.counts) * 1.05] } };
   }
   draw(ctx) {
-    const { r, sx, sy, theme } = ctx;
+    const { r, sx, sy } = ctx;
     const b = this._bins(ctx);
     const color = this.options.color || ctx.color.byIndex(0);
     const y0 = sy(0);
@@ -2690,7 +2743,6 @@ var FunnelMark = class extends Mark {
     const max = Math.max(...data.map((d) => +d[vk])) || 1;
     const h = area.height / data.length;
     const cx = area.x + area.width / 2;
-    let prevHalf = (data.length ? +data[0][vk] / max : 1) * (area.width / 2);
     data.forEach((d, i) => {
       const w0 = +d[vk] / max * (area.width / 2);
       const next = i < data.length - 1 ? +data[i + 1][vk] / max * (area.width / 2) : w0 * 0.85;
@@ -2871,8 +2923,8 @@ registerMark("sankey", SankeyMark);
 function chart(el, config) {
   return new Chart(el, config);
 }
-var version = "0.1.2";
-var lombok_charts_default = { Chart, chart, registerMark, version };
+var version = "0.1.6";
+var lombok_charts_default = { Chart, chart, registerMark, registerLocales, version };
 export {
   ArcMark,
   AreaMark,
@@ -2885,6 +2937,7 @@ export {
   HeatmapMark,
   HistogramMark,
   LineMark,
+  MESSAGES,
   Mark,
   PointMark,
   RadarMark,
@@ -2900,17 +2953,24 @@ export {
   lombok_charts_default as default,
   getMark,
   hasMark,
+  isRTL,
   lightTheme,
   linearScale,
   listMarks,
   logScale,
   lttb,
+  messages,
   minMaxDecimate,
+  numberFormatter,
   polarToCartesian,
   radialScale,
+  registerLocale,
+  registerLocales,
   registerMark,
+  resolveLocale,
   sequentialScale,
   sqrtScale,
+  summarize,
   timeScale,
   version
 };

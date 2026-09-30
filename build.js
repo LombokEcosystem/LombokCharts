@@ -20,11 +20,17 @@ const targets = [
   { format: 'iife', globalName: 'LombokCharts', outfile: 'dist/lombok-charts.umd.js', minify: false },
   { format: 'iife', globalName: 'LombokCharts', outfile: 'dist/lombok-charts.umd.min.js', minify: true },
   { format: 'cjs', outfile: 'dist/lombok-charts.cjs', minify: false },
+  // Opt-in locale catalogs (Core-20 + Nusantara), kept out of the main bundle.
+  { entry: 'src/i18n/locales.js', format: 'esm', outfile: 'dist/lombok-charts-i18n.esm.js', minify: false },
+  { entry: 'src/i18n/locales.js', format: 'cjs', outfile: 'dist/lombok-charts-i18n.cjs', minify: false },
+  { entry: 'src/i18n/all.js', format: 'iife', globalName: 'LombokChartsI18n', outfile: 'dist/lombok-charts-i18n.umd.js', minify: false },
+  { entry: 'src/i18n/all.js', format: 'iife', globalName: 'LombokChartsI18n', outfile: 'dist/lombok-charts-i18n.umd.min.js', minify: true },
 ];
 
 async function run() {
   for (const t of targets) {
-    const opts = { entryPoints: [entry], bundle: true, banner, target: 'es2020', ...t };
+    const { entry: e = entry, ...rest } = t;
+    const opts = { entryPoints: [e], bundle: true, banner, target: 'es2020', ...rest };
     if (watch) { const c = await esbuild.context(opts); await c.watch(); console.log('watching', t.outfile); }
     else { await esbuild.build(opts); console.log('built', t.outfile); }
   }

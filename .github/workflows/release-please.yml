@@ -62,7 +62,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload "${{ steps.release.outputs.tag_name }}" \
-            .release/lombok-charts-*.zip .release/lombok-charts-*.tgz --clobber
+            .release/lombokcharts-*.zip .release/lombokcharts-*.tgz --clobber
 
       # SourceForge File Release System (only if SF secrets are configured)
       - name: Publish to SourceForge
@@ -76,7 +76,7 @@ jobs:
           chmod 600 ~/.ssh/sf_key
           ver="${{ steps.release.outputs.tag_name }}"
           rsync -e "ssh -i ~/.ssh/sf_key -o StrictHostKeyChecking=no" -av \
-            .release/lombok-charts-*.zip .release/lombok-charts-*.tgz \
+            .release/lombokcharts-*.zip .release/lombokcharts-*.tgz \
             "$SF_USER@frs.sourceforge.net:/home/frs/project/$SF_PROJECT/${ver}/"
 
       # Force a Packagist update (belt-and-suspenders beyond the webhook)

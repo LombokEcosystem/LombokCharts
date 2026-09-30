@@ -29,7 +29,9 @@ src/
   stream/     live scheduler + source connectors
   interaction/tooltip, legend, zoom/pan, quadtree
   theme/      design tokens (light/dark)
+  i18n/       UI strings (en built in; Core-20 + Nusantara opt-in via locales.js), RTL, Intl labels
 tests/        zero-dependency test harness
+vectors/      normative cross-language test vectors for the pure core
 examples/     HTML demos (styled with LombokCSS)
 docs/         api, theming, architecture, porting
 ```
@@ -38,6 +40,14 @@ Read [`docs/architecture.md`](docs/architecture.md) before adding features — i
 explains the Data → Scale → Mark pipeline and the draw-context contract.
 
 ## Guidelines
+
+- **Universal, no ownership claims (Lombok Ecosystem Principle #11 / ADR-019).** Never describe
+  LombokCharts as "part of" / "for" a specific application or framework; write use cases
+  domain-neutral first.
+- **Spec changes are explicit.** If a pure-logic change alters `vectors/lombokcharts-vectors-v1.json`,
+  regenerate it (`node scripts/gen-vectors.mjs`) and call the change out in the PR description.
+- **Documents are private by default.** `.gitignore` ignores every `*.md` except an owner-approved
+  allowlist. Do not add or publish new documents without the owner's explicit approval.
 
 - **Zero runtime dependencies.** PRs adding a runtime dependency will not be merged.
 - **Keep pure logic pure.** Scales, decimation, layout math, and the ring buffer
