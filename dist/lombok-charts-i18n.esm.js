@@ -1,4 +1,4 @@
-/* LombokCharts v0.1.7 | Apache-2.0 | https://github.com/codinglombok/LombokCharts */
+/* LombokCharts v0.1.8 | Apache-2.0 | https://github.com/codinglombok/LombokCharts */
 
 // src/i18n/locales.js
 var LOCALES = {
