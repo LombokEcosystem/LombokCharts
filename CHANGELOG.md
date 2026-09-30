@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7](https://github.com/LombokEcosystem/LombokCharts/compare/lombok-charts-v0.1.6...lombok-charts-v0.1.7) (2026-09-30)
+
+
+### Features
+
+* align LombokCharts with Lombok Ecosystem masterplan v3.4 ([8009777](https://github.com/LombokEcosystem/LombokCharts/commit/80097775acfaafa889db5cdeb8582b9c1d74c127))
+* align with masterplan v3.4 — i18n (Core-20 + Nusantara), core test vectors, lombokcharts rename ([01d804c](https://github.com/LombokEcosystem/LombokCharts/commit/01d804c472ac4a6ed0900abb807a24ea195d3573))
+* **i18n:** make non-English locale catalogs opt-in ([ff3afbd](https://github.com/LombokEcosystem/LombokCharts/commit/ff3afbdc6eb14addbcae867bb0dbc05e82b51163))
+
 ## [0.1.6](https://github.com/codinglombok/LombokCharts/compare/lombok-charts-v0.1.5...lombok-charts-v0.1.6) (2026-08-30)
 
 
