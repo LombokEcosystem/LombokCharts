@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.9](https://github.com/LombokEcosystem/LombokCharts/compare/lombok-charts-v0.1.8...lombok-charts-v0.1.9) (2026-09-30)
+
+
+### Bug Fixes
+
+* point package repository to LombokEcosystem/LombokCharts ([#59](https://github.com/LombokEcosystem/LombokCharts/issues/59)) ([bf4dfac](https://github.com/LombokEcosystem/LombokCharts/commit/bf4dfac3c222d9f672dab6aab13bf2ec21fcca78))
+
 ## [0.1.8](https://github.com/LombokEcosystem/LombokCharts/compare/lombok-charts-v0.1.7...lombok-charts-v0.1.8) (2026-09-30)
 
 
