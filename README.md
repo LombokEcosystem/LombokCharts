@@ -42,9 +42,9 @@
 
 ## Packagist
 
-[![Packagist version](https://img.shields.io/packagist/v/codinglombok/lombokcharts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombokcharts)
-[![Packagist downloads](https://img.shields.io/packagist/dt/codinglombok/lombokcharts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombokcharts)
-[![Packagist license](https://img.shields.io/packagist/l/codinglombok/lombokcharts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombokcharts)
+[![Packagist version](https://img.shields.io/packagist/v/codinglombok/lombok-charts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombok-charts)
+[![Packagist downloads](https://img.shields.io/packagist/dt/codinglombok/lombok-charts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombok-charts)
+[![Packagist license](https://img.shields.io/packagist/l/codinglombok/lombok-charts.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/codinglombok/lombok-charts)
 
 ---
 
@@ -158,10 +158,10 @@ Other CDN options (pinned version, ESM, unpkg) are listed in [`DISTRIBUTION.md`]
 ### Composer (PHP projects)
 
 ```bash
-composer require codinglombok/lombokcharts
+composer require codinglombok/lombok-charts
 ```
 
-Then reference `vendor/codinglombok/lombokcharts/dist/lombok-charts.umd.min.js` in your HTML.
+Then reference `vendor/codinglombok/lombok-charts/dist/lombok-charts.umd.min.js` in your HTML.
 
 ## Chart Types
 
