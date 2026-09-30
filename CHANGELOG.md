@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10](https://github.com/LombokEcosystem/LombokCharts/compare/lombok-charts-v0.1.9...lombok-charts-v0.1.10) (2026-09-30)
+
+
+### Bug Fixes
+
+* **composer:** restore Packagist name and publish vX.Y.Z tags ([#63](https://github.com/LombokEcosystem/LombokCharts/issues/63)) ([4183864](https://github.com/LombokEcosystem/LombokCharts/commit/418386457239f41fa878eed218b879a6011ecdcc))
+
 ## [0.1.9](https://github.com/LombokEcosystem/LombokCharts/compare/lombok-charts-v0.1.8...lombok-charts-v0.1.9) (2026-09-30)
 
 
