@@ -10,9 +10,14 @@ Composer and the GitHub-based CDN work without a build step. CI fails if `dist/`
 |---|---|
 | npm | `lombok-charts` (exception — see below) |
 | Packagist | `codinglombok/lombokcharts` (was `codinglombok/lombok-charts`) |
-| GitHub Packages (npm) | `@codinglombok/lombokcharts` |
+| GitHub Packages (npm) | `@lombokecosystem/lombokcharts` |
+| GitHub Packages (container) | `ghcr.io/lombokecosystem/lombokcharts` |
 | Maven (GitHub Packages) | `io.lombok:lombokcharts` |
 | NuGet (GitHub Packages) | `CodingLombok.Charts` |
+| RubyGems (GitHub Packages) | `lombokcharts` |
+
+GitHub Packages namespaces follow the repository owner (`LombokEcosystem`); the workflow
+derives them automatically. `publish-packages.yml` can also be run manually (Actions → Run workflow).
 
 **npm exception:** npm rejects `lombokcharts` as "too similar to existing package
 lombok-charts" (its typosquatting guard applies even to the same owner), so the npm name stays

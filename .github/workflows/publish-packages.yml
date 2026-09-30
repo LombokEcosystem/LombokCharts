@@ -1,11 +1,14 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # LombokCharts — Publish to GitHub Packages (5 registries)
 # Called from release-please.yml when a release is created.
+# Every GitHub Packages namespace is derived from the repository owner
+# (GitHub only lets GITHUB_TOKEN publish into its own owner's namespace).
 # ──────────────────────────────────────────────────────────────────────────────
 name: Publish to GitHub Packages
 
 on:
   workflow_call:
+  workflow_dispatch:   # manual re-publish of the current version
 
 permissions: {}
 
@@ -28,7 +31,7 @@ jobs:
       - name: Scope package for GPR
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          npm pkg set name="@codinglombok/lombokcharts"
+          npm pkg set name="@${GITHUB_REPOSITORY_OWNER,,}/lombokcharts"
           npm pkg set version="$VERSION"
       - run: npm publish
         env:
@@ -67,7 +70,7 @@ jobs:
       - name: Build and push
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          IMAGE="ghcr.io/codinglombok/lombokcharts"
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/lombokcharts"
           docker build -t "$IMAGE:$VERSION" -t "$IMAGE:latest" .
           docker push "$IMAGE:$VERSION"
           docker push "$IMAGE:latest"
@@ -111,7 +114,7 @@ jobs:
             <distributionManagement>
               <repository>
                 <id>github</id>
-                <url>https://maven.pkg.github.com/codinglombok/LombokCharts</url>
+                <url>https://maven.pkg.github.com/$GITHUB_REPOSITORY</url>
               </repository>
             </distributionManagement>
           </project>
@@ -168,8 +171,8 @@ jobs:
               <Authors>codinglombok</Authors>
               <Description>Zero-dependency charting library — Canvas/SVG, LTTB, streaming</Description>
               <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-              <PackageProjectUrl>https://github.com/codinglombok/LombokCharts</PackageProjectUrl>
-              <RepositoryUrl>https://github.com/codinglombok/LombokCharts</RepositoryUrl>
+              <PackageProjectUrl>https://github.com/$GITHUB_REPOSITORY</PackageProjectUrl>
+              <RepositoryUrl>https://github.com/$GITHUB_REPOSITORY</RepositoryUrl>
               <RepositoryType>git</RepositoryType>
               <PackageReadmeFile>README.md</PackageReadmeFile>
               <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -189,11 +192,11 @@ jobs:
           cd ..
 
           dotnet nuget add source \
-            --username codinglombok \
+            --username "$GITHUB_ACTOR" \
             --password "$GITHUB_TOKEN" \
             --store-password-in-clear-text \
             --name github \
-            "https://nuget.pkg.github.com/codinglombok/index.json"
+            "https://nuget.pkg.github.com/${GITHUB_REPOSITORY_OWNER,,}/index.json"
 
           dotnet nuget push "nupkg/*.nupkg" \
             --api-key "$GITHUB_TOKEN" \
@@ -238,7 +241,7 @@ jobs:
             s.summary     = 'Zero-dependency charting library'
             s.description = 'Canvas/SVG chart library with LTTB decimation and real-time streaming'
             s.authors     = ['codinglombok']
-            s.homepage    = 'https://github.com/codinglombok/LombokCharts'
+            s.homepage    = 'https://github.com/$GITHUB_REPOSITORY'
             s.license     = 'Apache-2.0'
             s.files       = Dir['lib/**/*'] + ['README.md', 'LICENSE']
           end
@@ -252,5 +255,5 @@ jobs:
           chmod 0600 ~/.gem/credentials
 
           gem build lombokcharts.gemspec
-          gem push --key github --host https://rubygems.pkg.github.com/codinglombok \
+          gem push --key github --host "https://rubygems.pkg.github.com/${GITHUB_REPOSITORY_OWNER,,}" \
             lombokcharts-$VERSION.gem
