@@ -61,17 +61,17 @@ jobs:
 
           ### npm
           \`\`\`bash
-          npm install lombokcharts
+          npm install lombok-charts
           \`\`\`
 
           ### pnpm
           \`\`\`bash
-          pnpm add lombokcharts
+          pnpm add lombok-charts
           \`\`\`
 
           ### yarn
           \`\`\`bash
-          yarn add lombokcharts
+          yarn add lombok-charts
           \`\`\`
 
           ## Quick Start
@@ -79,7 +79,7 @@ jobs:
           ### Basic Usage
 
           \`\`\`javascript
-          import { chart } from 'lombokcharts';
+          import { chart } from 'lombok-charts';
 
           chart('#app', {
             data: [
@@ -96,7 +96,7 @@ jobs:
           ### Via CDN (no build step)
 
           \`\`\`html
-          <script src="https://cdn.jsdelivr.net/npm/lombokcharts/dist/lombok-charts.umd.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/lombok-charts/dist/lombok-charts.umd.min.js"></script>
           <script>
             LombokCharts.chart('#app', {
               data: [{ label: 'A', value: 10 }],
@@ -126,7 +126,7 @@ jobs:
           ---
           *LombokCharts v${VERSION} - Zero-Dependency Charting Library*
 
-          [Repository](https://github.com/codinglombok/LombokCharts) | [npm Package](https://www.npmjs.com/package/lombokcharts) | [License](https://github.com/codinglombok/LombokCharts/blob/main/LICENSE)
+          [Repository](https://github.com/codinglombok/LombokCharts) | [npm Package](https://www.npmjs.com/package/lombok-charts) | [License](https://github.com/codinglombok/LombokCharts/blob/main/LICENSE)
           EOF
 
       - name: Commit and push wiki changes

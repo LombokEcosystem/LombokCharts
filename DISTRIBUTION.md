@@ -8,22 +8,21 @@ Composer and the GitHub-based CDN work without a build step. CI fails if `dist/`
 
 | Registry | Name |
 |---|---|
-| npm | `lombokcharts` (was `lombok-charts` ≤ 0.1.6) |
+| npm | `lombok-charts` (exception — see below) |
 | Packagist | `codinglombok/lombokcharts` (was `codinglombok/lombok-charts`) |
 | GitHub Packages (npm) | `@codinglombok/lombokcharts` |
 | Maven (GitHub Packages) | `io.lombok:lombokcharts` |
 | NuGet (GitHub Packages) | `CodingLombok.Charts` |
 
-The bundle **file names** in `dist/` (`lombok-charts.umd.min.js`, …) are unchanged so existing
-`<script>` tags and jsDelivr-from-GitHub URLs keep working. After the first `lombokcharts`
-release, deprecate the old npm name once (maintainer, manual):
+**npm exception:** npm rejects `lombokcharts` as "too similar to existing package
+lombok-charts" (its typosquatting guard applies even to the same owner), so the npm name stays
+`lombok-charts`. Do **not** deprecate `lombok-charts`; it is the live npm package.
 
-```bash
-npm deprecate lombok-charts "Renamed to lombokcharts — npm i lombokcharts"
-```
+The bundle **file names** in `dist/` (`lombok-charts.umd.min.js`, …) are unchanged, so existing
+`<script>` tags and CDN URLs keep working.
 
 On Packagist, mark `codinglombok/lombok-charts` as abandoned with `codinglombok/lombokcharts` as
-the replacement.
+the replacement once `codinglombok/lombokcharts` is registered.
 
 ## npm
 
@@ -35,17 +34,17 @@ npm run build && npm publish --access public
 ```
 
 `package.json` already declares `main`/`module`/`browser`/`exports`/`files`, and `prepublishOnly`
-runs the build. Consumers: `npm i lombokcharts`.
+runs the build. Consumers: `npm i lombok-charts`.
 
 ## jsDelivr (CDN — no account needed)
 
 Serves automatically once the package is on npm **or** from the GitHub repo/tag:
 
-- npm: `https://cdn.jsdelivr.net/npm/lombokcharts@<version>/dist/lombok-charts.umd.min.js`
+- npm: `https://cdn.jsdelivr.net/npm/lombok-charts@<version>/dist/lombok-charts.umd.min.js`
 - GitHub: `https://cdn.jsdelivr.net/gh/codinglombok/LombokCharts@<tag>/dist/lombok-charts.umd.min.js`
 
 The GitHub form works immediately after you push a tag (because `dist/` is committed), even
-before publishing to npm. unpkg mirrors the npm form at `https://unpkg.com/lombokcharts/...`.
+before publishing to npm. unpkg mirrors the npm form at `https://unpkg.com/lombok-charts/...`.
 
 ## Composer / Packagist
 

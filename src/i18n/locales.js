@@ -5,8 +5,8 @@
 // Opt-in locale catalogs (pure data, no side effects), kept out of the main bundle.
 // Core-20 world languages (minus the built-in 'en') plus a Nusantara pack (jv, su, ms).
 //
-//   import { registerLocales } from 'lombokcharts';
-//   import { LOCALES } from 'lombokcharts/i18n';
+//   import { registerLocales } from 'lombok-charts';
+//   import { LOCALES } from 'lombok-charts/i18n';
 //   registerLocales(LOCALES);             // or registerLocales({ id: LOCALES.id })
 
 /** @type {Record<string, {noData:string, chart:string, summary:string}>} */

@@ -23,10 +23,10 @@
 
 ## npm
 
-[![npm version](https://img.shields.io/npm/v/lombokcharts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombokcharts)
-[![npm downloads](https://img.shields.io/npm/dm/lombokcharts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombokcharts)
-[![npm total](https://img.shields.io/npm/dt/lombokcharts.svg?style=flat-square&logo=npm&label=total)](https://www.npmjs.com/package/lombokcharts)
-[![jsDelivr hits](https://img.shields.io/jsdelivr/npm/hm/lombokcharts.svg?style=flat-square&logo=jsdelivr)](https://www.jsdelivr.com/package/npm/lombokcharts)
+[![npm version](https://img.shields.io/npm/v/lombok-charts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombok-charts)
+[![npm downloads](https://img.shields.io/npm/dm/lombok-charts.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/lombok-charts)
+[![npm total](https://img.shields.io/npm/dt/lombok-charts.svg?style=flat-square&logo=npm&label=total)](https://www.npmjs.com/package/lombok-charts)
+[![jsDelivr hits](https://img.shields.io/jsdelivr/npm/hm/lombok-charts.svg?style=flat-square&logo=jsdelivr)](https://www.jsdelivr.com/package/npm/lombok-charts)
 
 ---
 
@@ -117,11 +117,11 @@ and cross-language test vectors for porting the pure core.
 ### npm / bundler
 
 ```bash
-npm install lombokcharts
+npm install lombok-charts
 ```
 
 ```js
-import { chart } from "lombokcharts";
+import { chart } from "lombok-charts";
 
 chart("#app", {
   mark: "bar",
@@ -139,7 +139,7 @@ chart("#app", {
 
 ```html
 <div id="app" style="width:600px; height:400px"></div>
-<script src="https://cdn.jsdelivr.net/npm/lombokcharts/dist/lombok-charts.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lombok-charts/dist/lombok-charts.umd.min.js"></script>
 <script>
   LombokCharts.chart("#app", {
     mark: "bar",
@@ -239,8 +239,8 @@ English is built in. The other 22 catalogs (Core-20 + jv, su, ms) are **opt-in**
 nothing to your bundle unless you load them (~1.8 KB gzip for all of them):
 
 ```js
-import { chart, registerLocales } from "lombokcharts";
-import { LOCALES } from "lombokcharts/i18n";
+import { chart, registerLocales } from "lombok-charts";
+import { LOCALES } from "lombok-charts/i18n";
 
 registerLocales(LOCALES);            // all languages, or just one: registerLocales({ id: LOCALES.id })
 chart("#app", { mark: "bar", data, title: "Omzet", locale: "id-ID" });
@@ -251,8 +251,8 @@ chart("#app", { mark: "bar", data, title: "Omzet", locale: "id-ID" });
 With script tags, load the add-on after the main bundle; it registers every catalog automatically:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/lombokcharts/dist/lombok-charts.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lombokcharts/dist/lombok-charts-i18n.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lombok-charts/dist/lombok-charts.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lombok-charts/dist/lombok-charts-i18n.umd.min.js"></script>
 ```
 
 Opt-in catalogs: zh, hi, es, fr, ar, bn, pt, ru, ur, id, de, ja, sw, mr, te, tr, ta, vi, ko
