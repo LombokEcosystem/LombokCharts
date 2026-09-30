@@ -9,7 +9,7 @@ Composer and the GitHub-based CDN work without a build step. CI fails if `dist/`
 | Registry | Name |
 |---|---|
 | npm | `lombok-charts` (exception — see below) |
-| Packagist | `codinglombok/lombokcharts` (was `codinglombok/lombok-charts`) |
+| Packagist | `codinglombok/lombok-charts` (exception — see below) |
 | GitHub Packages (npm) | `@lombokecosystem/lombokcharts` |
 | GitHub Packages (container) | `ghcr.io/lombokecosystem/lombokcharts` |
 | Maven (GitHub Packages) | `io.lombok:lombokcharts` |
@@ -26,8 +26,9 @@ lombok-charts" (its typosquatting guard applies even to the same owner), so the 
 The bundle **file names** in `dist/` (`lombok-charts.umd.min.js`, …) are unchanged, so existing
 `<script>` tags and CDN URLs keep working.
 
-On Packagist, mark `codinglombok/lombok-charts` as abandoned with `codinglombok/lombokcharts` as
-the replacement once `codinglombok/lombokcharts` is registered.
+**Packagist exception:** the package has been registered as `codinglombok/lombok-charts` since
+0.1.0, and Packagist only imports tags whose `composer.json` name matches the registered package,
+so the Composer name stays `codinglombok/lombok-charts` as well.
 
 ## npm
 
@@ -53,7 +54,7 @@ before publishing to npm. unpkg mirrors the npm form at `https://unpkg.com/lombo
 
 ## Composer / Packagist
 
-`composer.json` uses the `vendor/package` name `codinglombok/lombokcharts`, license `Apache-2.0`.
+`composer.json` uses the `vendor/package` name `codinglombok/lombok-charts`, license `Apache-2.0`.
 One-time setup:
 
 1. Sign in at https://packagist.org with your GitHub account.
@@ -61,8 +62,9 @@ One-time setup:
 3. Enable the **GitHub → Packagist webhook** (Packagist shows the exact hook) so new git tags
    auto-update the package.
 
-Versions come from **git tags** (`vX.Y.Z`). Consumers: `composer require codinglombok/lombokcharts`,
-then use `vendor/codinglombok/lombokcharts/dist/…`. `.gitattributes` keeps the archive lean
+Versions come from **git tags** (`vX.Y.Z`); release-please tags `lombok-charts-vX.Y.Z`, so the release
+workflow also pushes a plain `vX.Y.Z` tag for Packagist. Consumers: `composer require codinglombok/lombok-charts`,
+then use `vendor/codinglombok/lombok-charts/dist/…`. `.gitattributes` keeps the archive lean
 (ships `src`, `dist`, `docs`, `README`, `LICENSE`, `NOTICE`).
 
 ## SourceForge (sf.net) — release downloads

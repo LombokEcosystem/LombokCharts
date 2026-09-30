@@ -79,6 +79,21 @@ jobs:
             .release/lombokcharts-*.zip .release/lombokcharts-*.tgz \
             "$SF_USER@frs.sourceforge.net:/home/frs/project/$SF_PROJECT/${ver}/"
 
+      # Packagist only understands version tags like v1.2.3, but release-please tags
+      # lombok-charts-v1.2.3; push the plain vX.Y.Z tag on the release commit too.
+      - name: Add Packagist version tag
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag_name }}
+        run: |
+          VTAG="v${RELEASE_TAG##*-v}"
+          if git ls-remote --exit-code --tags origin "refs/tags/$VTAG" >/dev/null; then
+            echo "$VTAG already exists"
+          else
+            git tag "$VTAG" "$GITHUB_SHA"
+            git push origin "refs/tags/$VTAG"
+          fi
+
       # Force a Packagist update (belt-and-suspenders beyond the webhook)
       - name: Ping Packagist
         if: ${{ steps.release.outputs.release_created && env.PACKAGIST_TOKEN != '' }}
@@ -87,7 +102,7 @@ jobs:
         run: |
           curl -sf -XPOST -H 'content-type:application/json' \
             "https://packagist.org/api/update-package?username=${PACKAGIST_USER}&apiToken=${PACKAGIST_TOKEN}" \
-            -d '{"repository":{"url":"https://github.com/codinglombok/LombokCharts"}}'
+            -d "{\"repository\":{\"url\":\"https://github.com/${GITHUB_REPOSITORY}\"}}"
 
   # ---- GitHub Packages (5 registries) ----
   github-packages:
