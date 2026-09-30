@@ -1,4 +1,4 @@
-/* LombokCharts v0.1.8 | Apache-2.0 | https://github.com/codinglombok/LombokCharts */
+/* LombokCharts v0.1.9 | Apache-2.0 | https://github.com/codinglombok/LombokCharts */
 var LombokCharts = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -2993,7 +2993,7 @@ var LombokCharts = (() => {
   function chart(el, config) {
     return new Chart(el, config);
   }
-  var version = "0.1.8";
+  var version = "0.1.9";
   var lombok_charts_default = { Chart, chart, registerMark, registerLocales, version };
   return __toCommonJS(lombok_charts_exports);
 })();
