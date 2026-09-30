@@ -56,5 +56,5 @@ export { RingBuffer } from './data/ringbuffer.js';
 export * from './scales/index.js';
 export { MESSAGES, messages, summarize, resolveLocale, isRTL, numberFormatter, registerLocale, registerLocales } from './i18n/messages.js';
 
-export const version = '0.1.9'; // x-release-please-version
+export const version = '0.1.10'; // x-release-please-version
 export default { Chart, chart, registerMark, registerLocales, version };
