@@ -55,9 +55,9 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codinglombok/LombokCharts.git"
+    "url": "git+https://github.com/LombokEcosystem/LombokCharts.git"
   },
-  "homepage": "https://github.com/codinglombok/LombokCharts#readme",
+  "homepage": "https://github.com/LombokEcosystem/LombokCharts#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "1.56.0",
